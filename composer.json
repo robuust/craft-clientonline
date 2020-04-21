@@ -1,6 +1,6 @@
 {
     "version": "1.0.0",
-    "name": "robuust/clientonline",
+    "name": "robuust/craft-clientonline",
     "description": "ClientOnline RSS Importer for Craft 3",
     "type": "craft-plugin",
     "license": "MIT",
