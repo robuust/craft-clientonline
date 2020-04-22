@@ -84,6 +84,21 @@ class ClientOnline extends Component
     }
 
     /**
+     * Get entry by article id.
+     *
+     * @param string $articleId
+     *
+     * @return Entry|null
+     */
+    public function getEntry(string $articleId): ?Entry
+    {
+        $query = Entry::find()->section($this->section);
+        $query[$this->settings->articleIdField] = $articleId;
+
+        return $query->anyStatus()->one();
+    }
+
+    /**
      * Import item.
      *
      * @param array $item
@@ -92,9 +107,7 @@ class ClientOnline extends Component
      */
     public function importItem(array $item): bool
     {
-        $query = Entry::find()->section($this->section);
-        $query[$this->settings->articleIdField] = $item['article_id'];
-        $entry = $query->anyStatus()->one();
+        $entry = $this->getEntry($item['article_id']);
 
         if (!$entry) {
             $entry = new Entry();
