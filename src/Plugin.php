@@ -29,7 +29,8 @@ class Plugin extends \craft\base\Plugin
             $articleId = $request->getQueryParam('article_id');
             $article = $this->clientonline->getEntry($articleId);
             if ($article) {
-                Craft::$app->getResponse()->redirect($article->uri, 301)->send();
+                Craft::$app->getResponse()->redirect($article->url, 301);
+                Craft::$app->end();
             }
         }
     }
