@@ -1,3 +1,7 @@
+## 1.0.3 - 2020-06-29
+### Fixed
+- Fixed issue where the import failed if there was no image
+
 ## 1.0.2 - 2020-06-02
 ### Fixed
 - Fixed issue where request wasn't ended after redirecting

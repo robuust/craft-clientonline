@@ -118,7 +118,7 @@ class ClientOnline extends Component
             $entry->postDate = $item['date'];
             $entry->setFieldValues([
                 $this->settings->articleIdField => $item['article_id'],
-                $this->settings->imageField => ['data' => [$item['image']], 'filename' => [$item['article_id'].'.jpg']],
+                $this->settings->imageField => isset($item['image']) ? ['data' => [$item['image']], 'filename' => [$item['article_id'].'.jpg']] : [],
                 $this->settings->textField => $item['content'],
             ]);
 
