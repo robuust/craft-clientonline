@@ -37,7 +37,7 @@ return [
     // Fields
     'articleIdField' => 'YOUR_NEWS_ARTICLE_ID_FIELD', // PlainText
     'imageField' => 'YOUR_NEWS_IMAGE_FIELD', // Asset
-    'textField' => 'YOUR_NEWS_TEXT_FIELD', // PlainText or Redactor
+    'textField' => 'YOUR_NEWS_TEXT_FIELD', // Redactor
 ];
 
 ```

@@ -1,3 +1,7 @@
+## 1.1.0 - 2023-01-04
+### Changed
+- Changed source of news from clientonline to sra
+
 ## 1.0.3 - 2020-06-29
 ### Fixed
 - Fixed issue where the import failed if there was no image

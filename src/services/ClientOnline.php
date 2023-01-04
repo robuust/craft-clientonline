@@ -4,7 +4,8 @@ namespace robuust\clientonline\services;
 
 use Craft;
 use craft\elements\Entry;
-use craft\helpers\UrlHelper;
+use craft\helpers\Json;
+use DateTime;
 use robuust\clientonline\Plugin;
 use yii\base\Component;
 
@@ -57,30 +58,15 @@ class ClientOnline extends Component
      */
     public function getFeed(): array
     {
-        // Create feed url
-        $url = $this->getFeedUrl();
-
         // Get feed items
-        $items = Craft::$app->getFeeds()->getFeedItems($url);
+        $request = Craft::createGuzzleClient()->get(static::URL, [
+            'query' => [
+                'officeid' => $this->settings->office_id,
+                'full' => 'true',
+            ],
+        ]);
 
-        // Inject feed images and rewrite urls
-        $items = array_map(function ($item) {
-            $url = UrlHelper::urlWithScheme($item['permalink'], 'https');
-
-            // Get feed image
-            if (preg_match('/<img(.*?)src="(.*?)"/s', file_get_contents($url), $matches)) {
-                $item['image'] = $matches[2];
-            }
-
-            // Get article id
-            if (preg_match('/article_id=(.*?)$/s', $url, $matches)) {
-                $item['article_id'] = $matches[1];
-            }
-
-            return $item;
-        }, $items);
-
-        return $items;
+        return Json::decode((string) $request->getBody());
     }
 
     /**
@@ -107,37 +93,26 @@ class ClientOnline extends Component
      */
     public function importItem(array $item): bool
     {
-        $entry = $this->getEntry($item['article_id']);
+        $entry = $this->getEntry($item['ID']);
 
         if (!$entry) {
+            $image = base64_encode(file_get_contents($item['NewsItem']['ImageUrl']));
+
             $entry = new Entry();
             $entry->sectionId = $this->section->id;
             $entry->typeId = $this->entryType->id;
             $entry->enabled = true;
-            $entry->title = $item['title'];
-            $entry->postDate = $item['date'];
+            $entry->title = $item['Title'];
+            $entry->postDate = new DateTime($item['Date']);
             $entry->setFieldValues([
-                $this->settings->articleIdField => $item['article_id'],
-                $this->settings->imageField => isset($item['image']) ? ['data' => [$item['image']], 'filename' => [$item['article_id'].'.jpg']] : [],
-                $this->settings->textField => $item['content'],
+                $this->settings->articleIdField => $item['ID'],
+                $this->settings->imageField => ['data' => ['data:image/jpeg;base64,'.$image], 'filename' => [$item['ID'].'.jpg']],
+                $this->settings->textField => $item['NewsItem']['PublicText'],
             ]);
 
             return Craft::$app->getElements()->saveElement($entry);
         }
 
         return false;
-    }
-
-    /**
-     * Get feed url.
-     *
-     * @return string
-     */
-    protected function getFeedUrl(): string
-    {
-        return UrlHelper::urlWithParams(static::URL, [
-            'officeid' => $this->settings->office_id,
-            'full' => true,
-        ]);
     }
 }
