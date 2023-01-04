@@ -1,5 +1,5 @@
 {
-    "version": "1.0.3",
+    "version": "1.1.0",
     "name": "robuust/craft-clientonline",
     "description": "ClientOnline RSS Importer for Craft 3",
     "type": "craft-plugin",
@@ -19,7 +19,7 @@
         "hasCpSection": false
     },
     "require": {
-        "php": "^7.0",
+        "php": "^7.0 || ^8.0",
         "craftcms/cms": "^3.0"
     },
     "autoload": {
