@@ -31,7 +31,6 @@ Create a file called `clientonline.php` in you Craft config folder with the foll
 return [
     // General
     'office_id' => 9999, // YOUR OFFICE_ID
-    'suboffice_id' => 9999, // YOUR SUBOFFICE_ID
     // Section
     'sectionHandle' => 'YOUR_NEWS_SECTION_HANDLE',
     'entryTypeHandle' => 'YOUR_NEWS_ENTRY_TYPE_HANDLE',

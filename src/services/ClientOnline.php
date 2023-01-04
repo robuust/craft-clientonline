@@ -16,7 +16,7 @@ class ClientOnline extends Component
     /**
      * @var string
      */
-    const URL = 'https://www.clientonline.nl/co2_news/news.php5';
+    const URL = 'https://www.sra.nl/api/news/get';
 
     /**
      * @var Settings
@@ -136,10 +136,8 @@ class ClientOnline extends Component
     protected function getFeedUrl(): string
     {
         return UrlHelper::urlWithParams(static::URL, [
-            'office_id' => $this->settings->office_id,
-            'suboffice_id' => $this->settings->suboffice_id,
-            'co2_news_task' => 'rss',
-            'full_articles' => true,
+            'officeid' => $this->settings->office_id,
+            'full' => true,
         ]);
     }
 }

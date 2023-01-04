@@ -15,11 +15,6 @@ class Settings extends Model
     public $office_id;
 
     /**
-     * @var int
-     */
-    public $suboffice_id;
-
-    /**
      * @var string
      */
     public $sectionHandle;
@@ -50,7 +45,7 @@ class Settings extends Model
     public function rules()
     {
         return [
-            [['office_id', 'suboffice_id', 'sectionHandle', 'entryTypeHandle', 'articleIdField', 'imageField', 'textField'], 'required'],
+            [['office_id', 'sectionHandle', 'entryTypeHandle', 'articleIdField', 'imageField', 'textField'], 'required'],
         ];
     }
 }
